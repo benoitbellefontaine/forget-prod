@@ -10,6 +10,7 @@
     margin: 0;
     padding: 0;
     background: #2b4b64;
+    background: white;
   }
   
   .sidebar {
@@ -17,17 +18,18 @@
     overflow: hidden;
     height: 100%;
     width: 400px;
-    background: white;
+    background: lightgray;
     padding: 40px;
     padding-top: 60px;
     font-size: 15px;
+    z-index: 100;
   }
   
   .toggle {
     position: absolute;
     margin: 40px;
     color: #dfdfdf;
-    z-index: 100;
+    z-index: 101;
     font-size: 2em;
     cursor: pointer;
   }
@@ -52,3 +54,40 @@
     display: flex;
     justify-content: center;
   }
+
+  .ant-truck {
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    border-radius: 50%;
+    font-size: 3em !important;
+    background-color: #A7C8C8;
+  }
+
+.menu {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
+
+.menu:hover {
+  border: 1px solid black;
+  color: white;
+  background-color: black;
+}
+
+.text-service {
+  text-align: justify;
+  margin: 20px;
+  font-family: 'Kanit';
+  font-size: 14px;
+}
+
+.box-service {
+  width:34vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color: white;
+}

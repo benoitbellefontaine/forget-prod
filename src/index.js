@@ -4,6 +4,7 @@ import { Parallax } from 'react-spring'
 import { Keyframes, animated, config } from 'react-spring'
 import { Avatar, Form, Icon, Input, Button, Checkbox } from 'antd'
 import delay from 'delay'
+import * as Icons from './icons'
 
 import './styles.css'
 import 'antd/dist/antd.css'
@@ -41,7 +42,7 @@ const Page = ({ offset, caption, first, second, gradient, onClick }) => (
         </span>
       </Parallax.Layer>
     </React.Fragment>
-  )
+)
 
 class AppHorizontal extends React.Component {
   scroll = to => this.parallax.scrollTo(to)
@@ -145,7 +146,6 @@ class AppVertical extends React.Component {
 }
 
 /****************************************** Animated */
-/*
 const fast = { ...config.stiff, restSpeedThreshold: 1, restDisplacementThreshold: 0.01 }
 
 // Creates a spring with predefined animation slots
@@ -164,15 +164,51 @@ const Sidebar = Keyframes.Spring({
   }
 })
 
+const Truck = Keyframes.Spring({
+  // Slots can take arrays/chains,
+  enter: [
+    { delay: 500, from: { x: -100 }, to: { x: 0 }, config: fast },
+    { delay: 800, to: { x: -100 }, config: config.slow }
+  ],
+  // single items,
+  open: { to: { x: 20 }, config: config.default },
+  // or async functions with side-effects
+  close: async call => {
+    await delay(400)
+    await call({ to: { x: -100 }, config: config.gentle })
+  }
+})
+
+const Box = Keyframes.Spring({
+  // Slots can take arrays/chains,
+  peek: [
+    { delay: 500, from: { x: -100, y:250 }, to: { x: 0 }, config: fast },
+    { delay: 800, to: { x: -100, y:250 }, config: config.slow }
+  ],
+  // single items,
+  open: { to: { x: 20 }, config: config.default },
+  // or async functions with side-effects
+  close: async call => {
+    await delay(400)
+    await call({ to: { x: -100 }, config: config.gentle })
+  }
+})
+
 // Creates a keyframed trail
 const Content = Keyframes.Trail({
-  peek: [{ delay: 600, from: { x: -100, opacity: 0 }, to: { x: 0, opacity: 1 } }, { to: { x: -100, opacity: 0 } }],
+  peek: [
+    { delay: 600, 
+      from: { x: -100, opacity: 0 }, 
+      to: { x: 0, opacity: 1 } 
+    }, 
+    { to: { x: -100, opacity: 0 } 
+  }],
   open: { delay: 100, to: { x: 0, opacity: 1 } },
   close: { to: { x: -100, opacity: 0 } }
 })
 
 const items = [
-  <Avatar src="https://semantic-ui.com/images/avatar2/large/elyse.png" />,
+  <Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
   <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />,
   <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />,
   <Fragment>
@@ -189,29 +225,83 @@ class App extends React.Component {
   render() {
     const state = this.state.open === undefined ? 'peek' : this.state.open ? 'open' : 'close'
     const icon = this.state.open ? 'fold' : 'unfold'
+    //const rollOff = Icons[`CloseSquareO`]
     return (
-      <Fragment>
-        <Icon type={`menu-${icon}`} className="toggle" onClick={this.toggle} />
-        <Sidebar native state={state}>
-          {({ x }) => (
-            <animated.div className="sidebar" style={{ transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}>
-              <Content native keys={items.map((_, i) => i)} config={{ tension: 200, friction: 20 }} state={state}>
-                {items.map((item, i) => ({ x, ...props }) => (
-                  <animated.div
-                    style={{
-                      transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
-                      ...props
-                    }}>
-                    <Form.Item className={i === 0 ? 'middle' : ''}>{item}</Form.Item>
-                  </animated.div>
-                ))}
-              </Content>
-            </animated.div>
-          )}
-        </Sidebar>
-      </Fragment>
+      <div>
+          <nav style={{height:'10vh',display:'flex',flexDirection:'column',justifyContent:'center'}}>
+            <div style={{margin:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                Centre de tri Forget
+              </div>              
+              <div style={{display:'flex',justifyContent:'space-between'}}>
+                <div className="menu">menu1</div>
+                <div className="menu">menu2</div>
+                <div className="menu">menu3</div>
+                <div className="menu">menu4</div>
+                <div className="menu">menu5</div>
+              </div>              
+            </div>
+          </nav>
+          <div style={{width:'100vw',height:'90vh',display:'flex',alignItems:'center'}}>
+            <div className="box-service" style={{backgroundColor:'#d30000'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                CUEILLETTE
+              </div>
+              <div className="ant-truck">
+                <Icons.PickUpTruck/>
+              </div>
+              <p className="text-service">
+                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
+              </p>        
+            </div>
+            <div className="box-service" style={{backgroundColor:'#54c33d'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                CONTENEURS
+              </div>
+              <div className="ant-truck">
+                <Icons.BinTruck/>
+              </div>
+              <p className="text-service">
+                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
+              </p>
+            </div>
+            <div className="box-service" style={{backgroundColor:'#3d54c3'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                TRI
+              </div>
+              <div className="ant-truck">
+                <Icons.Recycle/>
+              </div>
+              <p className="text-service">
+                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
+              </p>
+            </div>
+          </div>
+        
+        <div style={{position:'absolute',top:0,height:'100vh'}}>
+          <Icon type={`menu-${icon}`} className="toggle" onClick={this.toggle} />
+          <Sidebar native state={state}>
+            {({ x }) => (
+              <animated.div className="sidebar" style={{ transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}>
+                <Content native keys={items.map((_, i) => i)} config={{ tension: 200, friction: 20 }} state={state}>
+                  {items.map((item, i) => ({ x, ...props }) => (
+                    <animated.div
+                      style={{
+                        transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
+                        ...props
+                      }}>
+                      <Form.Item className={i === 0 ? 'middle' : ''}>{item}</Form.Item>
+                    </animated.div>
+                  ))}
+                </Content>
+              </animated.div>
+            )}
+          </Sidebar>
+        </div>
+
+      </div>
     )
   }
 }
-*/
-ReactDOM.render(<AppVertical />, document.getElementById('root'))
+
+ReactDOM.render(<App />, document.getElementById('root'))
