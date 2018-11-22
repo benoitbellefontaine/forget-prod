@@ -1,14 +1,25 @@
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
+import { HashRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { Parallax } from 'react-spring'
 import { Keyframes, animated, config } from 'react-spring'
-import { Avatar, Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Transition } from 'react-spring'
+import { Avatar, Form, Icon, Input, Button, Checkbox, Menu } from 'antd'
 import delay from 'delay'
 import * as Icons from './icons'
+import Red from './colorRoutes/red'
+import UltraRed from './colorRoutes/red'
 
 import './styles.css'
+import './colorRoutes/styles.css'
 import 'antd/dist/antd.css'
 import './styles2.css'
+
+const NavLink = props => (
+  <li className="navItem">
+    <Link {...props} style={{ cursor: 'pointer', color: 'inherit' }} />
+  </li>
+)
 
 // Little helpers ...
 const url = (name, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`
@@ -160,37 +171,7 @@ const Sidebar = Keyframes.Spring({
   // or async functions with side-effects
   close: async call => {
     await delay(400)
-    await call({ to: { x: -100 }, config: config.gentle })
-  }
-})
-
-const Truck = Keyframes.Spring({
-  // Slots can take arrays/chains,
-  enter: [
-    { delay: 500, from: { x: -100 }, to: { x: 0 }, config: fast },
-    { delay: 800, to: { x: -100 }, config: config.slow }
-  ],
-  // single items,
-  open: { to: { x: 20 }, config: config.default },
-  // or async functions with side-effects
-  close: async call => {
-    await delay(400)
-    await call({ to: { x: -100 }, config: config.gentle })
-  }
-})
-
-const Box = Keyframes.Spring({
-  // Slots can take arrays/chains,
-  peek: [
-    { delay: 500, from: { x: -100, y:250 }, to: { x: 0 }, config: fast },
-    { delay: 800, to: { x: -100, y:250 }, config: config.slow }
-  ],
-  // single items,
-  open: { to: { x: 20 }, config: config.default },
-  // or async functions with side-effects
-  close: async call => {
-    await delay(400)
-    await call({ to: { x: -100 }, config: config.gentle })
+    await call({ to: { x: 120 }, config: config.gentle })
   }
 })
 
@@ -204,83 +185,78 @@ const Content = Keyframes.Trail({
     { to: { x: -100, opacity: 0 } 
   }],
   open: { delay: 100, to: { x: 0, opacity: 1 } },
-  close: { to: { x: -100, opacity: 0 } }
+  close: { to: { x: 120, opacity: 0 } }
 })
 
 const items = [
-  <Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
-  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />,
-  <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />,
-  <Fragment>
-    <Checkbox>Remember me</Checkbox>
-    <a className="login-form-forgot" href="#" children="Forgot password" />
-    <Button type="primary" htmlType="submit" className="login-form-button" children="Log in" />
-    Or <a href="#">register now!</a>
-  </Fragment>
+  //<Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
+  <div className="ant-truck"><Icons.PickUpTruck /></div>,
+  <h3 style={{margin:0,padding:0,textAlign:'center'}}>Communiquer avec nous</h3>,
+  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Nom" />,
+  <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Adresse courriel" />,
+  <Input.TextArea prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Message" />,
+  <Button type="primary" htmlType="submit" className="login-form-button" children="Envoyer votre message" onClick={this.toggle}/>,
+  <h3 style={{margin:0,padding:0,textAlign:'center'}}>ou</h3>,
+  <Button prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} 
+    type="disabled" htmlType="submit" className="login-form-button" children="appeler nous au (819) 643-4448" />,
 ]
 
 class App extends React.Component {
   state = { open: undefined }
-  toggle = () => this.setState(state => ({ open: !state.open }))
+  toggle = () => {
+    console.log('toggle');
+    this.setState(state => ({ open: !state.open }))}
   render() {
-    const state = this.state.open === undefined ? 'peek' : this.state.open ? 'open' : 'close'
+    const state = this.state.open === undefined ? 'close' : this.state.open ? 'open' : 'close'
     const icon = this.state.open ? 'fold' : 'unfold'
     //const rollOff = Icons[`CloseSquareO`]
     return (
       <div>
-          <nav style={{height:'10vh',display:'flex',flexDirection:'column',justifyContent:'center'}}>
-            <div style={{margin:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                Centre de tri Forget
-              </div>              
-              <div style={{display:'flex',justifyContent:'space-between'}}>
-                <div className="menu">menu1</div>
-                <div className="menu">menu2</div>
-                <div className="menu">menu3</div>
-                <div className="menu">menu4</div>
-                <div className="menu">menu5</div>
-              </div>              
-            </div>
-          </nav>
-          <div style={{width:'100vw',height:'90vh',display:'flex',alignItems:'center'}}>
-            <div className="box-service" style={{backgroundColor:'#d30000'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                CUEILLETTE
+        <Router>
+          <Route
+            render={({ location, ...rest }) => (
+              <div>
+                <Route exact path="/" render={() => <Redirect to="/red" />} />
+                <div style={{ padding:0,margin:0,top:0,height:60,display:'flex',alignItems:'center',justifyContent:'space-between',backgroundColor: 'white',zIndex: 1}}>
+                  <div><i className="fas fa-seedling fa-2x"></i>Centre de tri Forget</div>
+                  <Menu mode="horizontal" style={{zIndex:200}}>
+                      <Menu.Item><NavLink to="/red">Red</NavLink></Menu.Item>
+                      <Menu.Item><NavLink to="/green">Green</NavLink></Menu.Item>
+                      <Menu.SubMenu title="sub menu">
+                        <Menu.Item>SubMenuItem</Menu.Item>
+                      </Menu.SubMenu>
+                      <Menu.Item>
+                        <i className="fas fa-envelope" onClick={this.toggle}></i>
+                      </Menu.Item>
+                  </Menu>
+                </div>
+
+                <div className="content">
+                  <Transition
+                    native
+                    config={{ tension: 1, friction: 10 }}
+                    keys={location.pathname.split('/').filter(a => a)[0]}
+                    from={{ transform: 'translateY(250px)', opacity: 0 }}
+                    enter={{ transform: 'translateY(0px)', opacity: 1 }}
+                    leave={{ transform: 'translateY(250px)', opacity: 0 }}>
+                    {style => (
+                      <Switch location={location}>
+                        <Route path="/red" render={props => Red({ ...props, style })} />
+                        <Route path="/green" render={props => Green({ ...props, style })} />
+                        <Route render={() => <div>Not Found</div>} />
+                      </Switch>
+                    )}
+                  </Transition>
+                </div>
               </div>
-              <div className="ant-truck">
-                <Icons.PickUpTruck/>
-              </div>
-              <p className="text-service">
-                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
-              </p>        
-            </div>
-            <div className="box-service" style={{backgroundColor:'#54c33d'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                CONTENEURS
-              </div>
-              <div className="ant-truck">
-                <Icons.BinTruck/>
-              </div>
-              <p className="text-service">
-                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
-              </p>
-            </div>
-            <div className="box-service" style={{backgroundColor:'#3d54c3'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                TRI
-              </div>
-              <div className="ant-truck">
-                <Icons.Recycle/>
-              </div>
-              <p className="text-service">
-                Bacon ipsum dolor amet chicken brisket chuck beef bresaola flank ball tip t-bone beef ribs salami. Salami tongue kielbasa shank biltong.
-              </p>
-            </div>
-          </div>
-        
-        <div style={{position:'absolute',top:0,height:'100vh'}}>
-          <Icon type={`menu-${icon}`} className="toggle" onClick={this.toggle} />
-          <Sidebar native state={state}>
+            )}
+          />
+        </Router>
+
+        {/* SIDEBAR */}
+        <div style={{position:'absolute',top:0,right:0,height:'100vh',overflow:'hidden'}}>
+          
+          <Sidebar native state={state} style={{overflow:'hidden',overflowY:'auto'}}>
             {({ x }) => (
               <animated.div className="sidebar" style={{ transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}>
                 <Content native keys={items.map((_, i) => i)} config={{ tension: 200, friction: 20 }} state={state}>
@@ -288,6 +264,7 @@ class App extends React.Component {
                     <animated.div
                       style={{
                         transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
+                        //transform: x.interpolate(x => `translate3d(${x}%,0,0)`)
                         ...props
                       }}>
                       <Form.Item className={i === 0 ? 'middle' : ''}>{item}</Form.Item>
