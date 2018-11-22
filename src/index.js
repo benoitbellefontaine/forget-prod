@@ -16,9 +16,9 @@ import 'antd/dist/antd.css'
 import './styles2.css'
 
 const NavLink = props => (
-  <li className="navItem">
+  <div className="navItem">
     <Link {...props} style={{ cursor: 'pointer', color: 'inherit' }} />
-  </li>
+  </div>
 )
 
 // Little helpers ...
@@ -217,11 +217,12 @@ class App extends React.Component {
             render={({ location, ...rest }) => (
               <div>
                 <Route exact path="/" render={() => <Redirect to="/red" />} />
-                <div style={{ padding:0,margin:0,top:0,height:60,display:'flex',alignItems:'center',justifyContent:'space-between',backgroundColor: 'white',zIndex: 1}}>
+                <div style={{ padding:0,margin:0,top:0,height:58,display:'flex',alignItems:'center',justifyContent:'space-between',backgroundColor: 'white',zIndex: 1}}>
                   <div><i className="fas fa-seedling fa-2x"></i>Centre de tri Forget</div>
-                  <Menu mode="horizontal" style={{zIndex:200}}>
+                  <Menu mode="horizontal" style={{zIndex:200,height:58}}>
                       <Menu.Item><NavLink to="/red">Red</NavLink></Menu.Item>
                       <Menu.Item><NavLink to="/green">Green</NavLink></Menu.Item>
+                      <Menu.Item><NavLink to="/green">Blue</NavLink></Menu.Item>
                       <Menu.SubMenu title="sub menu">
                         <Menu.Item>SubMenuItem</Menu.Item>
                       </Menu.SubMenu>
@@ -234,11 +235,11 @@ class App extends React.Component {
                 <div className="content">
                   <Transition
                     native
-                    config={{ tension: 1, friction: 10 }}
+                    config={{ tension: 10, friction: 10 }}
                     keys={location.pathname.split('/').filter(a => a)[0]}
-                    from={{ transform: 'translateY(250px)', opacity: 0 }}
-                    enter={{ transform: 'translateY(0px)', opacity: 1 }}
-                    leave={{ transform: 'translateY(250px)', opacity: 0 }}>
+                    from={{ transform: 'translateY(500px)', opacity: 0 }}
+                    enter={{ transform: 'translateY(10px)', opacity: 1 }}
+                    leave={{ transform: 'translateY(500px)', opacity: 0 }}>
                     {style => (
                       <Switch location={location}>
                         <Route path="/red" render={props => Red({ ...props, style })} />
