@@ -2,24 +2,19 @@ import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { Parallax } from 'react-spring'
-import { Keyframes, animated, config } from 'react-spring'
-import { Transition } from 'react-spring'
+import { Transition, Keyframes, animated, config } from 'react-spring'
 import { Avatar, Form, Icon, Input, Button, Checkbox, Menu } from 'antd'
 import delay from 'delay'
 import * as Icons from './icons'
-import Red from './colorRoutes/red'
-import UltraRed from './colorRoutes/red'
+import Route1 from './routes/route1'
+import Route2 from './routes/route2'
 
 import './styles.css'
-import './colorRoutes/styles.css'
 import 'antd/dist/antd.css'
 import './styles2.css'
+import './routes/routes.css'
 
-const NavLink = props => (
-  <div className="navItem">
-    <Link {...props} style={{ cursor: 'pointer', color: 'inherit' }} />
-  </div>
-)
+const Item = Menu.Item;
 
 // Little helpers ...
 const url = (name, wrap = false) => `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`
@@ -188,75 +183,125 @@ const Content = Keyframes.Trail({
   close: { to: { x: 120, opacity: 0 } }
 })
 
-const items = [
-  //<Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
-  <div className="ant-truck"><Icons.PickUpTruck /></div>,
-  <h3 style={{margin:0,padding:0,textAlign:'center'}}>Communiquer avec nous</h3>,
-  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Nom" />,
-  <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Adresse courriel" />,
-  <Input.TextArea prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Message" />,
-  <Button type="primary" htmlType="submit" className="login-form-button" children="Envoyer votre message" onClick={this.toggle}/>,
-  <h3 style={{margin:0,padding:0,textAlign:'center'}}>ou</h3>,
-  <Button prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} 
-    type="disabled" htmlType="submit" className="login-form-button" children="appeler nous au (819) 643-4448" />,
+const items2 = [
+  <Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
+  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />,
+  <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />,
+  <Fragment>
+    <Checkbox>Remember me</Checkbox>
+    <a className="login-form-forgot" href="#" children="Forgot password" />
+    <Button type="primary" htmlType="submit" className="login-form-button" children="Log in" />
+    Or <a href="#">register now!</a>
+  </Fragment>
 ]
 
 class App extends React.Component {
-  state = { open: undefined }
-  toggle = () => {
-    console.log('toggle');
-    this.setState(state => ({ open: !state.open }))}
+  state = { open: false }
+  toggle = () => this.setState(state => ({ open: !state.open }))
   render() {
-    const state = this.state.open === undefined ? 'close' : this.state.open ? 'open' : 'close'
+    const state = this.state.open === undefined ? 'peek' : this.state.open ? 'open' : 'close'
     const icon = this.state.open ? 'fold' : 'unfold'
+
+    const items = [
+      //<Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
+      <div className="ant-truck"><Icons.PickUpTruck /></div>,
+      <h3 style={{margin:0,padding:0,textAlign:'center'}}>Communiquer avec nous</h3>,
+      <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Nom" />,
+      <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Adresse courriel" />,
+      <Input.TextArea prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Message" />,
+      <Button type="primary" htmlType="submit" className="login-form-button" children="Envoyer votre message" onClick={this.toggle}/>,
+      <h3 style={{margin:0,padding:0,textAlign:'center'}}>ou</h3>,
+      <Button prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />} 
+        type="disabled" htmlType="submit" className="login-form-button" children="appeler nous au (819) 643-4448" />,
+    ]
+
     //const rollOff = Icons[`CloseSquareO`]
     return (
-      <div>
-        <Router>
-          <Route
-            render={({ location, ...rest }) => (
-              <div>
-                <Route exact path="/" render={() => <Redirect to="/red" />} />
-                <div style={{ padding:0,margin:0,top:0,height:58,display:'flex',alignItems:'center',justifyContent:'space-between',backgroundColor: 'white',zIndex: 1}}>
-                  <div><i className="fas fa-seedling fa-2x"></i>Centre de tri Forget</div>
-                  <Menu mode="horizontal" style={{zIndex:200,height:58}}>
-                      <Menu.Item><NavLink to="/red">Red</NavLink></Menu.Item>
-                      <Menu.Item><NavLink to="/green">Green</NavLink></Menu.Item>
-                      <Menu.Item><NavLink to="/green">Blue</NavLink></Menu.Item>
-                      <Menu.SubMenu title="sub menu">
-                        <Menu.Item>SubMenuItem</Menu.Item>
-                      </Menu.SubMenu>
-                      <Menu.Item>
-                        <i className="fas fa-envelope" onClick={this.toggle}></i>
-                      </Menu.Item>
-                  </Menu>
+        <div style={{height:'100vh',boxSizing:'border-box'}}>
+          <Router>
+            <Route
+              render={({ location, ...rest }) => (
+                <div className="fill">
+                  <Route exact path="/" render={() => <Redirect to="/route1" />} />
+                  <nav style={{height:'10vh',display:'flex',flexDirection:'column',justifyContent:'center'}}>
+                    <div style={{margin:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                      <div style={{fontFamily:'Kanit',fontSize:40}}>
+                        Centre de tri Forget
+                      </div>
+                      <Menu mode="horizontal" style={{zIndex:200,height:'10vh'}}>
+                        <Item><Link to="/route1">Route 1</Link></Item>
+                        <Item><Link to="/route2">Route 2</Link></Item>
+                        <Item onClick={this.toggle}> 
+                          <Icon type="mail" themed="filled" style={{ color: 'rgba(0,0,0,.25)' }} />
+                          Contact
+                        </Item>
+                      </Menu>                           
+                    </div>
+                  </nav>
+                  <div className="content">
+                    <Transition
+                      native
+                      config={{ tension: 1, friction: 10 }}
+                      keys={location.pathname.split('/').filter(a => a)[0]}
+                      from={{ transform: 'translateY(500px)', opacity: 0 }}
+                      enter={{ transform: 'translateY(0px)', opacity: 1 }}
+                      leave={{ transform: 'translateY(500px)', opacity: 0 }}>
+                      {style => (
+                        <Switch location={location}>
+                          <Route path="/route1" render={props => Route1({ ...props, style })} />
+                          <Route path="/route2" render={props => Route2({ ...props, style })} />
+                          <Route render={() => <div>Not Found</div>} />
+                        </Switch>
+                      )}
+                    </Transition>
+                  </div>
                 </div>
-
-                <div className="content">
-                  <Transition
-                    native
-                    config={{ tension: 10, friction: 10 }}
-                    keys={location.pathname.split('/').filter(a => a)[0]}
-                    from={{ transform: 'translateY(500px)', opacity: 0 }}
-                    enter={{ transform: 'translateY(10px)', opacity: 1 }}
-                    leave={{ transform: 'translateY(500px)', opacity: 0 }}>
-                    {style => (
-                      <Switch location={location}>
-                        <Route path="/red" render={props => Red({ ...props, style })} />
-                        <Route path="/green" render={props => Green({ ...props, style })} />
-                        <Route render={() => <div>Not Found</div>} />
-                      </Switch>
-                    )}
-                  </Transition>
-                </div>
+              )}
+            />
+          </Router>
+        {/*
+          <div style={{height:'90vh',display:'flex',alignItems:'center',boxSizing:'border-box'}}>
+            <div className="box-service" style={{backgroundColor:'#d30000'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                CUEILLETTE
               </div>
-            )}
-          />
-        </Router>
-
+              <div className="ant-truck">
+                <Icons.PickUpTruck/>
+              </div>
+              <p className="text-service">
+                Nous avons le bon bac pour la cueillette de vos rebuts au moment qui vous convient. 
+                Vous pouvez choisir une des trois grandeurs selon le volume et l'heure de la cueillette 
+                quotidienne ou journalière.
+              </p>        
+            </div>
+            <div className="box-service" style={{backgroundColor:'#54c33d'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                CONTENEURS
+              </div>
+              <div className="ant-truck">
+                <Icons.BinTruck/>
+              </div>
+              <p className="text-service">
+                Besoin d'un conteneur pour une courte ou une longue durée: pas de problème, nous avons plusieurs grandeurs 
+                en plus de choisir la date de la livraison et la date de la cueillette.
+              </p>
+            </div>
+            <div className="box-service" style={{backgroundColor:'#3d54c3',width:'33vw'}}>
+              <div style={{fontFamily:'Kanit',fontSize:40}}>
+                TRI
+              </div>
+              <div className="ant-truck">
+                <Icons.Recycle/>
+              </div>
+              <p className="text-service">
+                Notre centre de tri est notre contribution pour un meilleur environnement et nous l'avons
+                conçu pour maximiser le compostage et le recyclage. Notre devise : réutiliser, réduire et recycler.
+              </p>
+            </div>
+          </div>
+        */}
         {/* SIDEBAR */}
         <div style={{position:'absolute',top:0,right:0,height:'100vh',overflow:'hidden'}}>
-          
           <Sidebar native state={state} style={{overflow:'hidden',overflowY:'auto'}}>
             {({ x }) => (
               <animated.div className="sidebar" style={{ transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}>

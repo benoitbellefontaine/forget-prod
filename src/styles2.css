@@ -1,31 +1,30 @@
 * {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #2b4b64;
-  background: white;
-}
-
-.sidebar {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  width: 400px;
-  /*background: lightgray;*/
-  background: white;
-  padding: 40px;
-  padding-top: 60px;
-  font-size: 15px;
-  z-index: 100;
-}
-
+    box-sizing: border-box;
+  }
+  
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #2b4b64;
+    background: white;
+  }
+  
+  .sidebar {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 400px;
+    background: lightgray;
+    padding: 40px;
+    padding-top: 60px;
+    font-size: 15px;
+    z-index: 100;
+  }
+  
 .toggle {
   position: absolute;
   margin: 40px;
@@ -38,19 +37,19 @@ body,
 .login-form-forgot {
   float: right;
 }
-
+  
 .login-form-button {
   width: 100%;
 }
-
+  
 .ant-avatar {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   line-height: 150px;
   border-radius: 50%;
   font-size: 3em !important;
 }
-
+  
 .middle .ant-form-item-control {
   display: flex;
   justify-content: center;
@@ -63,14 +62,14 @@ body,
   border-radius: 50%;
   font-size: 3em !important;
   background-color: #A7C8C8;
-  text-align:center;
 }
 
 .menu {
   margin: 10px;
   padding: 5px;
   border: 1px solid lightgray;
-  z-index: 110;
+  z-index: 102;
+  font-family: 'Quattrocento Sans','Lato','Kanit';
 }
 
 .menu:hover {
@@ -81,21 +80,18 @@ body,
 
 .text-service {
   text-align: justify;
-  padding: 10px;
   margin: 20px;
-  font-family: 'Lato', 'Kanit';
-  font-size: 16px;
-  color: black;
-  border: 0px solid lightgray;
-  background-color: rgba(255,255,255,0.4);
+  font-family: 'Quattrocento Sans','Lato','Kanit';
+  font-size: 20px;
 }
 
 .box-service {
-  width: 33vw;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
+  width:34vw;
+  height:100%;
+  padding-top: 100px;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  flex-direction:column;
   color: white;
 }
