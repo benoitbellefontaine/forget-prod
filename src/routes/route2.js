@@ -46,7 +46,7 @@ const Route2 = ({ style }) => (
             </p>
           </div>
         </div>
-
+    
     </animated.div>
 )
 export default Route2
