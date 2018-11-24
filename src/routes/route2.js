@@ -9,9 +9,9 @@ const Route2 = ({ style }) => (
 
         <div style={{height:'100vh',display:'flex',alignItems:'center',boxSizing:'border-box'}}>
           <div className="box-service" style={{backgroundColor:'#d30000'}}>
-            <div style={{fontFamily:'Kanit',fontSize:40}}>
+            <h5>
               CUEILLETTE
-            </div>
+            </h5>
             <div className="ant-truck">
               <Icons.PickUpTruck/>
             </div>
@@ -22,9 +22,9 @@ const Route2 = ({ style }) => (
             </p>        
           </div>
           <div className="box-service" style={{backgroundColor:'#54c33d'}}>
-            <div style={{fontFamily:'Kanit',fontSize:40}}>
+            <h5>
               CONTENEURS
-            </div>
+            </h5>
             <div className="ant-truck">
               <Icons.BinTruck/>
             </div>
@@ -34,9 +34,9 @@ const Route2 = ({ style }) => (
             </p>
           </div>
           <div className="box-service" style={{backgroundColor:'#3d54c3',width:'33vw'}}>
-            <div style={{fontFamily:'Kanit',fontSize:40}}>
+            <h5>
               TRI
-            </div>
+            </h5>
             <div className="ant-truck">
               <Icons.Recycle/>
             </div>
