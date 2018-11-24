@@ -109,7 +109,7 @@ const RollOff = props => (
 
 const Truck = props => (
 <svg width="150" height="150" viewBox="-100 -320 1200 1200">
-  <path style={{fill:'red',stroke:'none',fillRule:'evenodd',stroke:'black',strokeWidth:3}}
+  <path style={{fill:'red',fillRule:'evenodd',stroke:'black',strokeWidth:3}}
       d="M 295.78419,86.816926 L 295.78419,335.08252 L 687.71625,335.40310 C 664.71649,354.19396 650.35734,380.09418 650.54503,414.08813 L 261.47933,413.85667 C 257.75238,281.97351 70.642616,282.42223 66.576854,413.09434 C 38.473995,412.88466 34.575813,406.50199 34.304870,380.61469 L 34.304868,281.61469 C 33.952015,237.37253 28.426810,266.57731 61.177014,182.67997 C 94.875059,93.246445 85.585107,101.51291 116.06480,99.204795 L 295.78419,86.816926 z M 217.93865,233.19966 L 219.48981,127.72046 L 119.43969,133.92512 C 101.20003,135.14704 101.04823,135.26154 94.621050,156.41701 L 69.026832,224.66825 C 60.428592,245.60250 61.797130,251.77115 85.314062,248.71131 L 217.93865,233.19966 z M 966.63494,335.59074 L 966.82552,391.36792 L 902.21802,414.23783 L 845.49140,414.20156 C 845.72230,381.85903 832.28136,354.65711 808.44981,335.54893 L 966.63494,335.59074 z " />
   <rect x="335.82718" y="12.158683" height="301.70154" width="631.32404" style={{fill:'#28F728',stroke:'black',strokeWidth:10}} />
   <circle r="77" cx="164" cy="412" style={{fill:'black',stroke:'none'}} />
@@ -264,4 +264,8 @@ const Recycle = props => (
 </svg>
 )
 
-export { PlusSquareO, MinusSquareO, CloseSquareO, EyeO, RollOff, Truck, BinTruck, PickUpTruck, Recycle }
+const Envelope = props  => (
+<svg aria-hidden="true" data-prefix="fas" data-icon="envelope" class="svg-inline--fa fa-envelope fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
+)
+
+export { PlusSquareO, MinusSquareO, CloseSquareO, EyeO, RollOff, Truck, BinTruck, PickUpTruck, Recycle, Envelope }

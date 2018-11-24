@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom'
 import { HashRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { Parallax } from 'react-spring'
 import { Transition, Keyframes, animated, config } from 'react-spring'
-import { Avatar, Form, Icon, Input, Button, Checkbox, Menu } from 'antd'
+import { Avatar, Form, Icon, Input, Button, Checkbox, Menu, Switch as SwitchA } from 'antd'
 import delay from 'delay'
 import * as Icons from './icons'
 import Route1 from './routes/route1'
 import Route2 from './routes/route2'
+import Commandes from './routes/commandes'
+
+import { LocaleProvider } from 'antd';
+import fr_FR from 'antd/lib/locale-provider/fr_FR';
+import 'moment/locale/fr';
 
 import './styles.css'
 import 'antd/dist/antd.css'
@@ -25,7 +30,7 @@ const Green = ({ children }) => <span style={{ color: '#57EE89' }}>{children}</s
 const Blue = ({ children }) => <span style={{ color: '#57C7FF' }}>{children}</span>
 const Gray = ({ children }) => <span style={{ color: '#909090' }}>{children}</span>
 
-const Page = ({ offset, caption, first, second, gradient, onClick }) => (
+  const Page = ({ offset, caption, first, second, gradient, onClick }) => (
     <React.Fragment>
       <Parallax.Layer offset={offset} speed={0.2} onClick={onClick}>
         <div className="slopeBegin" />
@@ -48,7 +53,7 @@ const Page = ({ offset, caption, first, second, gradient, onClick }) => (
         </span>
       </Parallax.Layer>
     </React.Fragment>
-)
+  )
 
 class AppHorizontal extends React.Component {
   scroll = to => this.parallax.scrollTo(to)
@@ -151,8 +156,14 @@ class AppVertical extends React.Component {
     }
 }
 
-/****************************************** Animated */
+/****************************************** Keyframes */
 const fast = { ...config.stiff, restSpeedThreshold: 1, restDisplacementThreshold: 0.01 }
+
+const NavLink = props => (
+  <li className="navItem">
+    <Link {...props} style={{ cursor: 'pointer', color: 'inherit' }} />
+  </li>
+)
 
 // Creates a spring with predefined animation slots
 const Sidebar = Keyframes.Spring({
@@ -196,12 +207,15 @@ const items2 = [
 ]
 
 class App extends React.Component {
-  state = { open: false }
+  state = { open: false, openOrder: false, language: true }
   toggle = () => this.setState(state => ({ open: !state.open }))
+  toggleOrder = () => this.setState(state => ({ openOrder: !state.openOrder }))
+  toggleLanguage = () => this.setState(state => ({ language: !state.language }))
   render() {
     const state = this.state.open === undefined ? 'peek' : this.state.open ? 'open' : 'close'
+    const stateOrder = this.state.openOrder ? 'open' : 'close'
     const icon = this.state.open ? 'fold' : 'unfold'
-
+    console.log(stateOrder);
     const items = [
       //<Avatar src="https://semantic-ui.com/images/avatar2/large/matthew.png" />,
       <div className="ant-truck"><Icons.PickUpTruck /></div>,
@@ -225,20 +239,19 @@ class App extends React.Component {
                   <Route exact path="/" render={() => <Redirect to="/route1" />} />
                   <nav style={{height:'10vh',display:'flex',flexDirection:'column',justifyContent:'center'}}>
                     <div style={{margin:10,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                      <div style={{fontFamily:'Kanit',fontSize:40}}>
+                      <div style={{fontSize:40,marginLeft:20}}>
                         Centre de tri Forget
                       </div>
-                      <Menu mode="horizontal" style={{zIndex:200,height:'10vh'}}>
-                        <Item><Link to="/route1">Route 1</Link></Item>
-                        <Item><Link to="/route2">Route 2</Link></Item>
-                        <Item onClick={this.toggle}> 
-                          <Icon type="mail" themed="filled" style={{ color: 'rgba(0,0,0,.25)' }} />
-                          Contact
-                        </Item>
-                      </Menu>                           
+                      <ul className="nav">
+                        <NavLink to="/route1"><span>Accueil</span></NavLink>
+                        <NavLink to="/route2"><span>Services</span></NavLink>
+                        <li className="navItem" onClick={this.toggleOrder} style={{display:'flex'}}><Icon type="gift" themed="filled" style={{ color: 'rgba(0,0,0,.25)', margin: '4px 5px' }} /> Commandes</li>
+                        <li className="navItem" onClick={this.toggle} style={{display:'flex'}}><Icon type="mail" themed="filled" style={{ color: 'rgba(0,0,0,.25)', margin: '4px 5px'  }} /> Contact</li>
+                        <li className="navItem" onClick={this.toggleLanguage}><SwitchA checkedChildren="F" unCheckedChildren="E" defaultChecked /></li>
+                      </ul>
                     </div>
                   </nav>
-                  <div className="content">
+                  <div className="content-route">
                     <Transition
                       native
                       config={{ tension: 1, friction: 10 }}
@@ -259,58 +272,18 @@ class App extends React.Component {
               )}
             />
           </Router>
-        {/*
-          <div style={{height:'90vh',display:'flex',alignItems:'center',boxSizing:'border-box'}}>
-            <div className="box-service" style={{backgroundColor:'#d30000'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                CUEILLETTE
-              </div>
-              <div className="ant-truck">
-                <Icons.PickUpTruck/>
-              </div>
-              <p className="text-service">
-                Nous avons le bon bac pour la cueillette de vos rebuts au moment qui vous convient. 
-                Vous pouvez choisir une des trois grandeurs selon le volume et l'heure de la cueillette 
-                quotidienne ou journalière.
-              </p>        
-            </div>
-            <div className="box-service" style={{backgroundColor:'#54c33d'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                CONTENEURS
-              </div>
-              <div className="ant-truck">
-                <Icons.BinTruck/>
-              </div>
-              <p className="text-service">
-                Besoin d'un conteneur pour une courte ou une longue durée: pas de problème, nous avons plusieurs grandeurs 
-                en plus de choisir la date de la livraison et la date de la cueillette.
-              </p>
-            </div>
-            <div className="box-service" style={{backgroundColor:'#3d54c3',width:'33vw'}}>
-              <div style={{fontFamily:'Kanit',fontSize:40}}>
-                TRI
-              </div>
-              <div className="ant-truck">
-                <Icons.Recycle/>
-              </div>
-              <p className="text-service">
-                Notre centre de tri est notre contribution pour un meilleur environnement et nous l'avons
-                conçu pour maximiser le compostage et le recyclage. Notre devise : réutiliser, réduire et recycler.
-              </p>
-            </div>
-          </div>
-        */}
+        
         {/* SIDEBAR */}
         <div style={{position:'absolute',top:0,right:0,height:'100vh',overflow:'hidden'}}>
           <Sidebar native state={state} style={{overflow:'hidden',overflowY:'auto'}}>
             {({ x }) => (
               <animated.div className="sidebar" style={{ transform: x.interpolate(x => `translate3d(${x}%,0,0)`) }}>
+                <Icon type={`menu-unfold`} className="toggle" style={{ right:20 }} onClick={this.toggle} />
                 <Content native keys={items.map((_, i) => i)} config={{ tension: 200, friction: 20 }} state={state}>
                   {items.map((item, i) => ({ x, ...props }) => (
-                    <animated.div
+                    <animated.div 
                       style={{
                         transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
-                        //transform: x.interpolate(x => `translate3d(${x}%,0,0)`)
                         ...props
                       }}>
                       <Form.Item className={i === 0 ? 'middle' : ''}>{item}</Form.Item>
@@ -320,7 +293,15 @@ class App extends React.Component {
               </animated.div>
             )}
           </Sidebar>
-        </div>
+          </div>
+
+          <div style={{position:'absolute',top:0,left:0,height:'100vh',overflow:'hidden'}}>
+            { 
+              this.state.language 
+                ? <LocaleProvider locale={fr_FR}><Commandes state={this.state.openOrder}/></LocaleProvider>
+                : <Commandes state={this.state.openOrder}/>
+            }
+          </div>
 
       </div>
     )

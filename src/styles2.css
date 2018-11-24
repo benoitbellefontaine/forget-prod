@@ -1,30 +1,30 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  html,
-  body,
-  #root {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #2b4b64;
-    background: white;
-  }
-  
-  .sidebar {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    width: 400px;
-    background: lightgray;
-    padding: 40px;
-    padding-top: 60px;
-    font-size: 15px;
-    z-index: 100;
-  }
-  
+  box-sizing: border-box;
+}
+
+/*html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #2b4b64;
+  background: white;
+}*/
+
+.sidebar {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 400px;
+  background: white;
+  padding: 40px;
+  padding-top: 60px;
+  font-size: 15px;
+  z-index: 100;
+}
+
 .toggle {
   position: absolute;
   margin: 40px;
@@ -37,11 +37,11 @@
 .login-form-forgot {
   float: right;
 }
-  
+
 .login-form-button {
   width: 100%;
 }
-  
+
 .ant-avatar {
   width: 150px;
   height: 150px;
@@ -49,7 +49,7 @@
   border-radius: 50%;
   font-size: 3em !important;
 }
-  
+
 .middle .ant-form-item-control {
   display: flex;
   justify-content: center;
@@ -62,14 +62,14 @@
   border-radius: 50%;
   font-size: 3em !important;
   background-color: #A7C8C8;
+  text-align:center;
 }
 
 .menu {
   margin: 10px;
   padding: 5px;
   border: 1px solid lightgray;
-  z-index: 102;
-  font-family: 'Quattrocento Sans','Lato','Kanit';
+  z-index: 110;
 }
 
 .menu:hover {
@@ -80,13 +80,17 @@
 
 .text-service {
   text-align: justify;
+  padding: 10px;
   margin: 20px;
-  font-family: 'Quattrocento Sans','Lato','Kanit';
-  font-size: 20px;
+  /*font-family: 'Lato', 'Kanit';*/
+  font-size: 16px;
+  color: black;
+  border: 0px solid lightgray;
+  background-color: rgba(255,255,255,0.4);
 }
 
 .box-service {
-  width:34vw;
+  width:34%;
   height:100%;
   padding-top: 100px;
   display:flex;
